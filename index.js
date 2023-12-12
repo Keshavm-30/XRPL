@@ -1,20 +1,21 @@
-const http = require("http");
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import AccountRouter from './routes/accounts.js';
 
-const app = express(); // request Handler
 
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use("/",(req,res,next)=>{
-    console.log("MiddleWare1");
-    res.send.json
+app.use(bodyParser.json());
+
+app.get('/',async(req,res)=>{
+    console.log("hello");
+})
+
+  
+app.use('/api/v1', AccountRouter);
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  })
     
-}); 
-
-
-app.use((req,res,next)=>{
-    console.log("MiddleWare2");
-    // res.send('<h1>Heyyyy</h1>');
-}); 
-
-
-app.listen(3000);

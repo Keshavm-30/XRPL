@@ -1,0 +1,28 @@
+export const RESPONSES = {
+    SUCCESS: 200,
+    CREATED: 201,
+    ACCEPTED: 202,
+    NOCONTENT: 204,
+    BADREQUEST: 400,
+    UN_AUTHORIZED: 401,
+    INVALID_REQ: 422,
+    FORBIDDEN: 403,
+    NOTFOUND: 404,
+    CONFLICT: 409,
+    TIMEOUT: 408,
+    TOOMANYREQ: 429,
+    INTERNALSERVER: 500,
+    BADGATEWAYS: 502,
+    SERVICEUNAVILABLE: 503,
+    GATEWAYTIMEOUT: 504,
+};
+export const RES_MSG = {
+    NO_DATA: 'No data found',
+    BADREQUEST: 'Not a Valid Request',
+    INTERNAL_SERVER_ERROR: 'Internal Server Error',
+    INVALID_USER: 'Invalid User',
+    SMTHNG_WRNG: 'Something went wrong',
+    UNAUTHORISED: 'You are not Authorised',
+    DATA_FOUND: 'Sucessfully Fetched Data',
+    DATA_CREATED: 'Data Sucessfully Created',
+};

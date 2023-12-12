@@ -26,9 +26,7 @@ async function GenerateAccount() {
 
 
 // If you already have seed encoded you can make a wallet Instance
-
 async function GetAccountFronSeed(){
-
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
     await client.connect();
     const test_wallet = xrpl.Wallet.fromSeed("sEdTLrJ9ou8qvDTRCv2ybofMA4Qm7eq");
