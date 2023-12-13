@@ -7,11 +7,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
-app.get('/',async(req,res)=>{
-    console.log("hello");
-})
-
   
 app.use('/api/v1', AccountRouter);
 

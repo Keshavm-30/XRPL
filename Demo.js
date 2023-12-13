@@ -1,5 +1,4 @@
-const xrpl = require("xrpl");
-
+import xrpl from 'xrpl';
 
 async function GetAccount(){
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233"); // RPC URL For Testnet

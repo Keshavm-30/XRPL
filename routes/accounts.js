@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {CreateAccount} from '../controllers/accounts.js'
+import {CreateAccount,GetAccountFromSeed,GetAccountInfo} from '../controllers/accounts.js'
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +14,9 @@ const public_key = process.env.PUBLIC_KEY;
 
 
 
-router.get("/creatAccount",CreateAccount)
+router.get("/creatAccount",CreateAccount);
+router.get("/GetAccountFromSeed/:seed",GetAccountFromSeed);
+router.get("/GetAccountInfo/:classicAddress",GetAccountInfo);
 
 
 
