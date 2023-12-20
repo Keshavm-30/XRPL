@@ -8,6 +8,7 @@ dotenv.config();
 export async function CreateAccount(req, res){
 
     try{
+        console.log("GitChanges");
         const rpc_url_testnet = process.env.RPC_URL_TESTNET;
         const client = new xrpl.Client(rpc_url_testnet);
         await client.connect();
