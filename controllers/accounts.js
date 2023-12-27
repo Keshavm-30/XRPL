@@ -9,6 +9,7 @@ dotenv.config();
 export async function CreateAccountWithFunds(req, res){
 
     try{
+        console.log("GitChanges");
         const rpc_url_testnet = process.env.RPC_URL_TESTNET;
         const client = new xrpl.Client(rpc_url_testnet);
         console.time('client.connect');
