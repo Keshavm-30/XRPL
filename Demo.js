@@ -1,6 +1,6 @@
 import xrpl from 'xrpl';
 
-async function GetAccount(){
+async function SendXRP(){
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233"); // RPC URL For Testnet
     await client.connect();
  
@@ -13,50 +13,53 @@ async function GetAccount(){
     await client.disconnect();
 }
 
-async function GenerateAccount() {
-    const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
-    await client.connect();
+async function sendXRP() {    
+  // results  = "Connecting to the selected ledger.\n"
+  // standbyResultField.value = results
+  // let net = getNet()
+  // results = 'Connecting to ' + getNet() + '....'
+  const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+  await client.connect()
+      
+  // results  += "\nConnected. Sending XRP.\n"
+  // standbyResultField.value = results
+      
+  const standby_wallet = xrpl.Wallet.fromSeed("sEdVX1izJZ4aTaGVurpua9qwtuQdNir") // seed : sEdVX1izJZ4aTaGVurpua9qwtuQdNir , classicAddress : raqZfTCuv6GYg8kddG3wve5AgFqfAtFTRw
+  const operational_wallet = xrpl.Wallet.fromSeed("sEdVry1zQAZqLdxrTtaym212JufYaqc") // seed : sEdVry1zQAZqLdxrTtaym212JufYaqc , classicAddress : r446j7kWjBsdpYoCWvyqmz1SitkFfJzwFX
+  // const sendAmount = standbyAmountField.value
 
-    const test_wallet = xrpl.Wallet.generate();
-    console.log(test_wallet);
-
-    await client.disconnect();
-}
-
-
-// If you already have seed encoded you can make a wallet Instance
-async function GetAccountFronSeed(){
-    const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
-    await client.connect();
-    const test_wallet = xrpl.Wallet.fromSeed("sEdTLrJ9ou8qvDTRCv2ybofMA4Qm7eq");
-    console.log(test_wallet);
-    await client.disconnect();
-}
-
-
-async function GetAccountInfo(){
-    const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
-    await client.connect();
-    // const test_wallet = xrpl.Wallet.fromSeed("sEdTLrJ9ou8qvDTRCv2ybofMA4Qm7eq");
-    const test_wallet = xrpl.Wallet.generate()
-    const response = await client.request({
-        "command": "account_info",
-        "account": "r9HbWBS6ojWxyjvdqogN9GU4TpPBn8h4RV", // Classic Address 
-        "ledger_index": "validated"
-      });
-    console.log(response);
-
-    // Listen to ledger close events
-  client.request({
-    "command": "subscribe",
-    "streams": ["ledger"]
+  console.log("standbyWallet",standby_wallet.address)
+  console.log("OperationalWallet",operational_wallet.address)
+  console.log("TypeOfOperationalWallet.address",typeof(operational_wallet.address));
+        
+  // results += "\nstandby_wallet.address: = " + standby_wallet.address
+  // standbyResultField.value = results
+      
+// -------------------------------------------------------- Prepare transaction
+  const prepared = await client.autofill({
+    "TransactionType": "Payment",
+    "Account": "raqZfTCuv6GYg8kddG3wve5AgFqfAtFTRw",
+    "Amount": xrpl.xrpToDrops(100),
+    "Destination": "r446j7kWjBsdpYoCWvyqmz1SitkFfJzwFX"
   })
-  client.on("ledgerClosed", async (ledger) => {
-    console.log(`Ledger #${ledger.ledger_index} validated with ${ledger.txn_count} transactions!`)
-  })
-    await client.disconnect();
-}
+      
+// ------------------------------------------------- Sign prepared instructions
+  const signed = standby_wallet.sign(prepared)
+  
+// -------------------------------------------------------- Submit signed blob
+  const tx = await client.submitAndWait(signed.tx_blob)
+      
+  // results  += "\nBalance changes: " + 
+  //   JSON.stringify(xrpl.getBalanceChanges(tx.result.meta), null, 2)
+  // standbyResultField.value = results
 
-GetAccountInfo();
-// GetAccount();
-
+  // standbyBalanceField.value =  (await client.getXrpBalance(standby_wallet.address))
+  // operationalBalanceField.value = (await client.getXrpBalance(operational_wallet.address))      
+  
+  const standByWalletBalance=  (await client.getXrpBalance(standby_wallet.address))
+  const operationalWalletBalance = (await client.getXrpBalance(operational_wallet.address)) 
+  console.log("standByWalletBalance",standByWalletBalance,"operatiionalWalletBalance",operationalWalletBalance);
+  client.disconnect()      
+} // End of sendXRP()
+   
+sendXRP()

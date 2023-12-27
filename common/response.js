@@ -25,4 +25,6 @@ export const RES_MSG = {
     UNAUTHORISED: 'You are not Authorised',
     DATA_FOUND: 'Sucessfully Fetched Data',
     DATA_CREATED: 'Data Sucessfully Created',
+    TRANSACTION_DONE : 'Transaction Sucessfull',
+    TRANSACTION_FAILED : 'Transaction Failed'
 };
