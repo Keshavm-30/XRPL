@@ -6,11 +6,15 @@ import Joi from 'joi';
 dotenv.config();
 
 
+
+// curl -i http://localhost:3000/api/v1/creatAccount
 export async function CreateAccountWithFunds(req, res){
 
     try{
         console.log("GitChanges");
         const rpc_url_testnet = process.env.RPC_URL_TESTNET;
+        console.log(typeof(rpc_url_testnet));
+        console.log(rpc_url_testnet);
         const client = new xrpl.Client(rpc_url_testnet);
         console.time('client.connect');
         await client.connect();
@@ -48,6 +52,7 @@ export async function CreateAccountWithFunds(req, res){
 
 }
 
+// curl -i http://localhost:3000/api/v1/GetAccountFromSeed/<seed>
 export async function GetAccountFromSeed(req, res){
     try{
         const rpc_url_testnet = process.env.RPC_URL_TESTNET;
@@ -75,6 +80,7 @@ export async function GetAccountFromSeed(req, res){
     }
 }
 
+//curl -i http://localhost:3000/api/v1/GetAccountInfo/rfJNm695zWfBV1h2zCVx5Xf8G2aJJpBGF9
 export async function GetAccountInfo(req,res){
     try{
         const rpc_url_testnet = process.env.RPC_URL_TESTNET;
@@ -120,6 +126,7 @@ export async function GetAccountInfo(req,res){
     }
 }
 
+// curl -X POST -H "Content-Type: application/json" -d '{"to": "destination-address"}' http://localhost:3000/api/v1/SendXRP/your-seed
 export async function SendXRP(req,res){
   try{
     const rpc_url_testnet = process.env.RPC_URL_TESTNET;
@@ -175,6 +182,7 @@ export async function SendXRP(req,res){
   }
 }
 
+//curl -i http://localhost:3000/api/v1/GetAccountBalance/rPT5Py6oKavq6v7AQwkhAG5CsjGRraveqi
 export async function GetAccountBalance(req,res){
 try{
   const rpc_url_testnet = process.env.RPC_URL_TESTNET;
